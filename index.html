@@ -177,7 +177,7 @@
       import { motion, AnimatePresence } from 'framer-motion';
       import {
         Menu, X, Globe, ArrowRight, Sparkles, ExternalLink, Lock,
-        Mail, Send, Github, Crown, Award, Shield
+        Mail, Send, Github, Crown, Award, Shield, Download
       } from 'lucide-react';
 
       /* ===================== Translations ===================== */
@@ -226,6 +226,7 @@
           navProject: "پرۆژەکانمان",
           navService: "خزمەتگوزارییەکانمان",
           navContact: "پەیوەندی",
+          navApp: "ئەپەکان",
           contactTitle: "پەیوەندی بکە",
           founder: "دامەزێنەر و سەرۆک",
           manager: "بەڕێوبەری تیم",
@@ -234,6 +235,8 @@
           privateProject: "🔒 پرۆژەی تایبەت",
           ourProjects: "پرۆژەکانمان",
           ourServices: "خزمەتگوزارییەکانمان",
+          ourApps: "ئەپەکانمان",
+          downloadApp: "دابەزاندن",
           email: "ئیمەیڵ",
           rights: "جموجورای مافەکان پارێزراون.",
           restdesc: "ئەم وێبسایتە لەلایەن KRD GROUP بۆ کڕیارێک دروست کراوە، بۆ پیشاندانی مینیوی خواردن، نرخەکان و جۆرە جیاوازەکانی خواردن بە شێوەیەکی مۆدێرن و ئاسان.",
@@ -290,6 +293,7 @@
         navProject: "Our Project",
         navService: "Our Service",
         navContact: "Contact Us",
+        navApp: "Apps",
         contactTitle: "Contact us",
         founder: "Founder & Leader",
         manager: "Team Manager",
@@ -298,6 +302,8 @@
         privateProject: "🔒 Private Project",
         ourProjects: "Our Projects",
         ourServices: "Our Services",
+        ourApps: "Our Apps",
+        downloadApp: "Download",
         email: "Email",
         rights: "All rights reserved.",
       };
@@ -623,6 +629,7 @@
           { id: 'about', label: t.navAbout },
           { id: 'project', label: t.navProject },
           { id: 'ourservice', label: t.navService },
+          { id: 'app', label: t.navApp },
           { id: 'contact', label: t.navContact },
         ];
 
@@ -1039,6 +1046,81 @@
         );
       }
 
+
+      /* ===================== Apps ===================== */
+      const appData = [
+        {
+          key: 'krdcv',
+          title: 'KRD CV',
+          descEn: 'Create professional CVs quickly and easily with KRD CV.',
+          descKu: 'بە KRD CV سیڤی پرۆفیشناڵ بە خێرایی و ئاسانی دروست بکە.',
+          imageKey: 'brand',
+          file: 'https://github.com/amz-group/krdgroup/releases/latest/download/KRD.CV.Setup.0.0.0.exe'
+        },
+      
+      ];
+
+      function Apps({ t, lang, images }) {
+        const rtl = lang === 'ku';
+
+        return (
+          <section className="px-6 py-12">
+            <div className="max-w-[1140px] mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="text-center mb-10"
+              >
+                <div className="text-[12px] tracking-[0.14em] uppercase font-bold text-[#f5b942]">{t.ourApps}</div>
+                <h2 className="mt-2 text-[32px] font-extrabold tracking-tight bg-gradient-to-b from-white to-[#cfd4e6] bg-clip-text text-transparent">
+                  {t.navApp}
+                </h2>
+              </motion.div>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                {appData.map((app, i) => (
+                  <motion.article
+                    key={app.key}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    className="group relative rounded-[20px] overflow-hidden bg-gradient-to-b from-white/[0.045] to-white/[0.012] border border-white/[0.09] shadow-[0_4px_14px_rgba(0,0,0,0.28)] hover:-translate-y-1.5 hover:border-[#f5b942]/40 hover:shadow-[0_24px_60px_-18px_rgba(245,185,66,0.45)] transition-all duration-500 flex flex-col"
+                  >
+                    <div className="relative h-48 overflow-hidden bg-[#0a0d18] flex items-center justify-center">
+                      <img
+                        src={images[app.imageKey]}
+                        alt={app.title}
+                        className="h-32 w-32 object-cover rounded-[24px] group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0d18] via-transparent to-transparent pointer-events-none" />
+                    </div>
+
+                    <div className="p-6 flex flex-col flex-1">
+                      <h3 className="text-[19px] font-bold text-white tracking-tight">{app.title}</h3>
+                      <p className="mt-2 text-[14.5px] leading-[1.65] text-[#8992a9] flex-1">
+                        {rtl ? app.descKu : app.descEn}
+                      </p>
+
+                      <a
+                        href={app.file}
+                        download
+                        className={`mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-[13.5px] text-[#0a0d18] bg-gradient-to-br from-[#f5b942] to-[#fbbf24] shadow-[0_8px_20px_-8px_rgba(245,185,66,0.7)] hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-8px_rgba(245,185,66,0.85)] transition-all duration-300 self-start ${rtl ? 'flex-row-reverse' : ''}`}
+                      >
+                        {t.downloadApp}
+                        <Download className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+
       /* ===================== Contact ===================== */
       function Contact({ t, lang }) {
         const rtl = lang === 'ku';
@@ -1155,6 +1237,7 @@
           about: <AboutDeveloper t={t} lang={lang} images={images} />,
           project: <Projects t={t} lang={lang} images={images} />,
           ourservice: <Services t={t} lang={lang} images={images} />,
+          app: <Apps t={t} lang={lang} images={images} />,
           contact: <Contact t={t} lang={lang} />,
         };
 
